@@ -48,10 +48,47 @@
         .avatar-sm { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
         .progress { height: 8px; border-radius: 10px; }
         .toggle-btn { background: none; border: none; font-size: 1.3rem; color: #475569; }
+        /* ===== Footer nav 4 ikon (khusus mobile, setelah login) ===== */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 64px;
+            background: rgba(255,255,255,.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid #e2e8f0;
+            box-shadow: 0 -4px 16px rgba(0,0,0,.08);
+            display: flex;
+            z-index: 1015;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        .mobile-nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: .62rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            transition: color .15s;
+        }
+        .mobile-nav-item i { font-size: 1.25rem; color: #64748b; }
+        .mobile-nav-item:active,
+        .mobile-nav-item.active { color: var(--primary-color); }
+        .mobile-nav-item:active i,
+        .mobile-nav-item.active i { color: var(--primary-color); }
         @media (max-width: 991.98px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.show { transform: translateX(0); }
             .main-content { margin-left: 0; }
+            .content { padding: 1.25rem 1rem calc(80px + env(safe-area-inset-bottom, 0px)); }
         }
     </style>
     @stack('styles')
@@ -151,6 +188,26 @@
             @yield('content')
         </main>
     </div>
+
+    {{-- ===== Footer 4 ikon (khusus tampilan mobile, setelah login) ===== --}}
+    <nav class="mobile-bottom-nav d-lg-none">
+        <a href="{{ route('dashboard') }}" class="mobile-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+            <i class="bi bi-speedometer2"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{{ route('monitoring.index') }}" class="mobile-nav-item {{ request()->routeIs('monitoring.*') ? 'active' : '' }}">
+            <i class="bi bi-graph-up-arrow"></i>
+            <span>Monitoring</span>
+        </a>
+        <a href="{{ route('early-warning.index') }}" class="mobile-nav-item {{ request()->routeIs('early-warning.*') ? 'active' : '' }}">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span>Warning</span>
+        </a>
+        <a href="{{ route('laporan.index') }}" class="mobile-nav-item {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
+            <i class="bi bi-file-earmark-bar-graph"></i>
+            <span>Laporan</span>
+        </a>
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

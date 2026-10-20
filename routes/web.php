@@ -17,6 +17,7 @@ use App\Http\Controllers\Master\TahunAuditController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RecommendationController;
+use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -144,5 +145,9 @@ Route::middleware('auth')->group(function () {
         ]);
         Route::post('/manajemen-user/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset-password');
         Route::get('/manajemen-user/{user}/login-activities', [UserController::class, 'loginActivities'])->name('users.login-activities');
+
+        // Terminal (admin only)
+        Route::get('/terminal', [TerminalController::class, 'index'])->name('terminal.index');
+        Route::post('/terminal/run', [TerminalController::class, 'run'])->name('terminal.run');
     });
 });

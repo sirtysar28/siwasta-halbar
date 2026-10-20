@@ -10,13 +10,25 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    /**
+     * Kode captcha login (5 digit) - STABIL / tidak berubah-ubah
+     */
+    public const CAPTCHA_CODE = '86420';
+
     public function showLogin()
     {
-        return view('auth.login');
+        return view('auth.login', ['captchaCode' => self::CAPTCHA_CODE]);
     }
 
     public function login(LoginRequest $request)
     {
+        // Validasi captcha (kode stabil, tidak pernah berubah)
+        if ($request->input('captcha') !== self::CAPTCHA_CODE) {
+            throw ValidationException::withMessages([
+                'captcha' => 'Kode captcha salah. Masukkan 5 digit kode sesuai tampilan.',
+            ]);
+        }
+
         $credentials = $request->only('email', 'password');
         $credentials['is_active'] = true;
 

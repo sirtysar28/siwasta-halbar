@@ -76,5 +76,8 @@
         <a class="nav-link {{ request()->routeIs('audit-trail.*') ? 'active' : '' }}" href="{{ route('audit-trail.index') }}">
             <i class="bi bi-clock-history"></i> Audit Trail
         </a>
+        <a class="nav-link {{ request()->routeIs('terminal.*') ? 'active' : '' }}" href="{{ route('terminal.index') }}">
+            <i class="bi bi-terminal"></i> Terminal
+        </a>
     @endif
 </div>
